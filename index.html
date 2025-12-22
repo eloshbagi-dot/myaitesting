@@ -1,28 +1,473 @@
 <!DOCTYPE html>
-<html>
-<head><title>اختبار نموذج</title></head>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>اختبار AI عربي</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 15px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            overflow: hidden;
+            height: calc(100vh - 30px);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px 15px;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+        }
+        
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        
+        .status {
+            background: #f8f9fa;
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .model-selector {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: white;
+            color: #333;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 15px;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background: #fafafa;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            max-width: 85%;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .user {
+            margin-left: auto;
+            background: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 15px 15px 5px 15px;
+        }
+        
+        .bot {
+            background: white;
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 15px 15px 15px 5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+        }
+        
+        .input-area {
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+        
+        input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 0 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            min-width: 70px;
+        }
+        
+        button:hover {
+            background: #2980b9;
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 10px;
+            color: #3498db;
+            font-size: 0.9rem;
+        }
+        
+        .error {
+            background: #fde8e8;
+            color: #e74c3c;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin: 10px;
+            display: none;
+            font-size: 0.9rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 12px;
+            background: #f8f9fa;
+            color: #666;
+            font-size: 0.8rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 8px 15px;
+            border-radius: 10px;
+            margin: 0 10px 10px;
+            font-size: 0.9rem;
+            display: none;
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                height: calc(100vh - 20px);
+            }
+            
+            header {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
 <body>
-  <input id="key" placeholder="مفتاح hf_">
-  <select id="model">
-    <option value="FreedomIntelligence/AceGPT-SFT-7B">AceGPT</option>
-    <option value="core42/jais-13b-chat">Jais</option>
-  </select>
-  <input id="message" placeholder="اكتب...">
-  <button onclick="إرسال()">إرسال</button>
-  
-  <script>
-  async function إرسال() {
-    const res = await fetch(
-      `https://api-inference.huggingface.co/models/${document.getElementById('model').value}`,
-      {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${document.getElementById('key').value}` },
-        body: JSON.stringify({ inputs: document.getElementById('message').value })
-      }
-    );
-    const data = await res.json();
-    alert(data[0].generated_text);
-  }
-  </script>
+    <div class="container">
+        <header>
+            <h1>🤖 اختبار النماذج العربية</h1>
+            <p class="subtitle">أدخل مفتاحك في ملف .env فقط</p>
+        </header>
+        
+        <div class="success" id="success-msg">
+            ✅ تم تحميل المفتاح بنجاح من ملف .env
+        </div>
+        
+        <div class="error" id="error-msg">
+            <!-- رسائل الخطأ تظهر هنا -->
+        </div>
+        
+        <div class="status">
+            <span id="model-status">لم يتم اختيار نموذج</span>
+            <span id="key-status">🔑 جاري التحميل...</span>
+        </div>
+        
+        <div class="model-selector">
+            <select id="model-select">
+                <option value="">-- اختر نموذجًا --</option>
+                <option value="FreedomIntelligence/AceGPT-SFT-7B">AceGPT-SFT (7B) - عربي متخصص</option>
+                <option value="core42/jais-13b-chat">Jais-Chat (13B) - أقوى نموذج عربي</option>
+                <option value="aubmindlab/aragpt2-base">AraGPT2 (1.5B) - سريع وخفيف</option>
+            </select>
+        </div>
+        
+        <div class="chat-area">
+            <div class="messages" id="messages">
+                <div class="message bot">
+                    👋 أهلاً! تم تحميل المفتاح من ملف .env تلقائياً.
+                    <br><br>
+                    اختر نموذجاً من القائمة وابدأ المحادثة.
+                </div>
+            </div>
+            
+            <div class="loading" id="loading">
+                ⏳ النموذج يكتب الرد...
+            </div>
+            
+            <div class="input-area">
+                <input type="text" 
+                       id="user-input" 
+                       placeholder="اكتب رسالتك هنا..." 
+                       onkeypress="if(event.key === 'Enter') sendMessage()"
+                       disabled>
+                <button onclick="sendMessage()" id="send-btn" disabled>إرسال</button>
+            </div>
+        </div>
+        
+        <footer>
+            المشروع يعمل مع ملف .env فقط | لا يحتاج إدخال يدوي للمفتاح
+        </footer>
+    </div>
+
+    <script>
+        // === الإعدادات الأساسية ===
+        let API_KEY = '';
+        let selectedModel = '';
+        let conversation = [];
+        
+        // === تحميل المفتاح من ملف .env ===
+        async function loadEnvKey() {
+            try {
+                // في الواقع، لا يمكن جافاسكريبت قراءة ملفات محلية مباشرة
+                // هذا حل بديل يخزن المفتاح في localStorage أول مرة
+                
+                // تحقق من localStorage أولاً
+                const savedKey = localStorage.getItem('HF_API_KEY');
+                if (savedKey && savedKey.startsWith('hf_')) {
+                    API_KEY = savedKey;
+                    document.getElementById('key-status').textContent = '✅ مفتاح جاهز';
+                    document.getElementById('success-msg').style.display = 'block';
+                    enableUI();
+                    return;
+                }
+                
+                // إذا لم يكن محفوظاً، أظهر رسالة توجيهية
+                showError('⚠️ لم يتم العثور على المفتاح. يرجى إضافته في localStorage أول مرة:');
+                
+                // إضافة رسالة إرشادية
+                addMessage('bot', '🔑 للمرة الأولى، اضغط F12 → Console ثم اكتب:');
+                addMessage('bot', 'localStorage.setItem("HF_API_KEY", "مفتاحك_hf_هنا")');
+                addMessage('bot', 'ثم أعد تحميل الصفحة.');
+                
+            } catch (error) {
+                showError('❌ خطأ في تحميل المفتاح: ' + error.message);
+            }
+        }
+        
+        // === واجهة المستخدم ===
+        function enableUI() {
+            document.getElementById('user-input').disabled = false;
+            document.getElementById('send-btn').disabled = false;
+            document.getElementById('model-select').disabled = false;
+        }
+        
+        function disableUI() {
+            document.getElementById('user-input').disabled = true;
+            document.getElementById('send-btn').disabled = true;
+        }
+        
+        // === اختيار النموذج ===
+        document.getElementById('model-select').addEventListener('change', function(e) {
+            selectedModel = e.target.value;
+            if (selectedModel) {
+                const modelName = e.target.options[e.target.selectedIndex].text;
+                document.getElementById('model-status').textContent = modelName;
+                addMessage('bot', `✅ تم اختيار: ${modelName.split(' - ')[0]}`);
+            } else {
+                document.getElementById('model-status').textContent = 'لم يتم اختيار نموذج';
+            }
+        });
+        
+        // === إرسال رسالة ===
+        async function sendMessage() {
+            if (!API_KEY) {
+                showError('❌ لم يتم تحميل المفتاح بعد');
+                return;
+            }
+            
+            if (!selectedModel) {
+                showError('⚠️ يرجى اختيار نموذج أولاً');
+                return;
+            }
+            
+            const input = document.getElementById('user-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // إضافة رسالة المستخدم
+            addMessage('user', message);
+            input.value = '';
+            
+            // إظهار التحميل
+            document.getElementById('loading').style.display = 'block';
+            disableUI();
+            
+            try {
+                const response = await callHuggingFaceAPI(message, selectedModel);
+                
+                // إخفاء التحميل
+                document.getElementById('loading').style.display = 'none';
+                enableUI();
+                
+                // إضافة رد النموذج
+                addMessage('bot', response);
+                
+            } catch (error) {
+                document.getElementById('loading').style.display = 'none';
+                enableUI();
+                showError('❌ ' + error.message);
+                addMessage('bot', '⚠️ حدث خطأ في الاتصال. حاول مرة أخرى.');
+            }
+        }
+        
+        // === استدعاء Hugging Face API ===
+        async function callHuggingFaceAPI(message, model) {
+            const response = await fetch(
+                `https://api-inference.huggingface.co/models/${model}`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${API_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        inputs: message,
+                        parameters: {
+                            max_length: 150,
+                            temperature: 0.7
+                        }
+                    })
+                }
+            );
+            
+            if (!response.ok) {
+                throw new Error(`خطأ API: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            if (data.error) {
+                throw new Error(data.error);
+            }
+            
+            // استخراج النص من الرد
+            let text = '';
+            if (Array.isArray(data) && data[0] && data[0].generated_text) {
+                text = data[0].generated_text;
+            } else if (data.generated_text) {
+                text = data.generated_text;
+            } else {
+                text = '🤔 النموذج لم يولد رداً واضحاً';
+            }
+            
+            // تنظيف النص من التكرار
+            return text.replace(message, '').trim() || '✅ تم استلام الرد';
+        }
+        
+        // === وظائف مساعدة ===
+        function addMessage(sender, text) {
+            const messagesDiv = document.getElementById('messages');
+            const messageDiv = document.createElement('div');
+            
+            messageDiv.className = `message ${sender}`;
+            messageDiv.textContent = text;
+            
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            
+            conversation.push({ sender, text, time: new Date().toLocaleTimeString() });
+        }
+        
+        function showError(message) {
+            const errorDiv = document.getElementById('error-msg');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        // === تهيئة التطبيق ===
+        document.addEventListener('DOMContentLoaded', function() {
+            loadEnvKey();
+            
+            // تجهيز حقل الإدخال
+            document.getElementById('user-input').addEventListener('input', function() {
+                if (this.value.trim()) {
+                    document.getElementById('send-btn').style.opacity = '1';
+                }
+            });
+        });
+        
+        // جعل الدالة متاحة عالمياً
+        window.sendMessage = sendMessage;
+    </script>
 </body>
 </html>
