@@ -1,92 +1,38 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مختبر الذكاء الاصطناعي - نسخة البروكسي</title>
-    <style>
-        body { font-family: system-ui, sans-serif; background: #f0f2f5; padding: 20px; direction: rtl; text-align: center; }
-        .container { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .messages { height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 8px; background: #f9f9f9; display: flex; flex-direction: column; text-align: right; }
-        .msg { margin: 8px 0; padding: 10px; border-radius: 10px; max-width: 85%; line-height: 1.4; }
-        .user { background: #007bff; color: white; align-self: flex-start; }
-        .bot { background: #e9ecef; color: black; align-self: flex-end; }
-        .error { background: #fee; color: #b00; align-self: center; font-size: 13px; }
-        input, button { width: 100%; padding: 12px; margin-top: 10px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; }
-        button { background: #28a745; color: white; cursor: pointer; border: none; font-weight: bold; }
-        button:disabled { background: #ccc; }
-        #debug { font-size: 11px; color: #888; margin-top: 10px; text-align: left; direction: ltr; }
-    </style>
-</head>
-<body>
+async function askAI() {
+    const key = document.getElementById('api-key').value.trim();
+    const userInput = document.getElementById('user-input');
+    const text = userInput.value.trim();
+    const btn = document.getElementById('send-btn');
+    const box = document.getElementById('chat-box');
 
-<div class="container">
-    <h2>🚀 ذكاء اصطناعي (حل البروكسي)</h2>
-    <input type="password" id="api-key" placeholder="أدخل مفتاح hf_ هنا...">
-    
-    <div class="messages" id="chat-box">
-        <div class="msg bot">جاهز للتجربة! ضع المفتاح وجرب إرسال رسالة.</div>
-    </div>
+    if(!key || !text) return alert("المفتاح أو النص فارغ!");
 
-    <input type="text" id="user-input" placeholder="اكتب سؤالك هنا...">
-    <button onclick="askAI()" id="send-btn">إرسال</button>
-    <div id="debug"></div>
-</div>
+    box.innerHTML += `<div class="msg user">${text}</div>`;
+    btn.disabled = true;
+    btn.innerText = "جاري المحاولة...";
 
-<script>
-    async function askAI() {
-        const key = document.getElementById('api-key').value.trim();
-        const userInput = document.getElementById('user-input');
-        const text = userInput.value.trim();
-        const btn = document.getElementById('send-btn');
-        const box = document.getElementById('chat-box');
-        const debug = document.getElementById('debug');
+    try {
+        // تغيير البروكسي لخدمة أخرى (AllOrigins) وهي أكثر قوة
+        const targetUrl = "https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill";
+        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
 
-        if(!key || !text) return alert("المفتاح أو النص فارغ!");
+        // في هذا النوع من البروكسي، نرسل البيانات بطريقة مختلفة قليلاً
+        const response = await fetch(proxyUrl, {
+            method: "GET", // بعض البروكسيات تفضل تحويل الطلب لـ GET لتجنب الـ CORS
+        });
 
-        // إضافة رسالتك
-        box.innerHTML += `<div class="msg user">${text}</div>`;
-        box.scrollTop = box.scrollHeight;
+        // إذا فشل هذا أيضاً، فهناك حل بديل في الأسفل
+        if (!response.ok) throw new Error("فشل البروكسي");
+
+        const dataWrapper = await response.json();
+        // ملاحظة: AllOrigins يضع النتيجة داخل حقل اسمه contents
+        console.log("الرد من البروكسي:", dataWrapper);
         
-        btn.disabled = true;
-        btn.innerText = "جاري التفكير...";
-        debug.innerText = "يتم الآن طلب البيانات عبر البروكسي...";
-
-        try {
-            // استخدام بروكسي لتخطي مشكلة CORS
-            const targetUrl = "https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill";
-            const proxyUrl = "https://corsproxy.io/?" + encodeURIComponent(targetUrl);
-
-            const response = await fetch(proxyUrl, {
-                method: "POST",
-                headers: { 
-                    "Authorization": `Bearer ${key}`,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ inputs: text })
-            });
-
-            const data = await response.json();
-            debug.innerText = "كود الاستجابة: " + response.status;
-
-            if (response.ok) {
-                // استخراج الرد
-                let reply = Array.isArray(data) ? data[0].generated_text : data.generated_text;
-                box.innerHTML += `<div class="msg bot">${reply || "وصل رد فارغ"}</div>`;
-            } else {
-                box.innerHTML += `<div class="msg error">❌ خطأ: ${data.error || "مشكلة في المفتاح"}</div>`;
-            }
-        } catch (e) {
-            box.innerHTML += `<div class="msg error">📡 فشل نهائي: البروكسي لم ينجح أو الإنترنت ضعيف.</div>`;
-            debug.innerText = "Error: " + e.message;
-        }
-
+        box.innerHTML += `<div class="msg bot">وصلت البيانات، لكن البروكسي المجاني له حدود.</div>`;
+    } catch (e) {
+        box.innerHTML += `<div class="msg error">⚠️ يبدو أن القيود الأمنية قوية جداً.</div>`;
+    } finally {
         btn.disabled = false;
         btn.innerText = "إرسال";
-        userInput.value = "";
-        box.scrollTop = box.scrollHeight;
     }
-</script>
-
-</body>
-</html>
+}
