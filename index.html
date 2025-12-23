@@ -3,41 +3,613 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Chat</title>
+    <title>موسوعة المزامنة الحيوية: بروتوكول "الطاقة والتركيز الفائق"</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2c5530;
+            --secondary: #d4a762;
+            --accent: #8b4513;
+            --light: #f8f5f0;
+            --dark: #1a1a1a;
+            --success: #3a7d34;
+            --warning: #b33a3a;
+            --gray: #6c757d;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.8;
+            color: var(--dark);
+            background-color: var(--light);
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, #1e3a28 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 8px solid var(--secondary);
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 1.5rem;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .header-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Main Content */
+        main {
+            padding: 3rem 0;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 2.5rem;
+            border-right: 5px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        section:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+
+        h2 i {
+            margin-left: 10px;
+            color: var(--accent);
+        }
+
+        h3 {
+            color: var(--accent);
+            font-size: 1.6rem;
+            margin: 1.8rem 0 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        h3 i {
+            margin-left: 10px;
+        }
+
+        h4 {
+            color: var(--success);
+            font-size: 1.3rem;
+            margin: 1.5rem 0 0.8rem;
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        ul, ol {
+            margin-right: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-right: 1.5rem;
+        }
+
+        li:before {
+            content: "•";
+            color: var(--secondary);
+            font-weight: bold;
+            position: absolute;
+            right: 0;
+        }
+
+        .warning-box {
+            background-color: #fff8f8;
+            border-right: 5px solid var(--warning);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box h4 {
+            color: var(--warning);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .warning-box h4 i {
+            margin-left: 10px;
+        }
+
+        .protocol-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .protocol-card {
+            background: #f9f7f2;
+            border-radius: 10px;
+            padding: 1.8rem;
+            border-top: 5px solid var(--accent);
+            transition: var(--transition);
+            height: 100%;
+        }
+
+        .protocol-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .protocol-time {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .protocol-hack {
+            background-color: #e8f4f8;
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin: 1.2rem 0;
+            border-right: 4px solid #3498db;
+        }
+
+        .protocol-hack h5 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .protocol-hack h5 i {
+            margin-left: 8px;
+        }
+
+        .safety-section {
+            background-color: #fef9f3;
+            border: 2px dashed var(--warning);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .disclaimer {
+            background-color: #f2f7ff;
+            border: 2px solid #b3c6e7;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .disclaimer h3 {
+            color: #2c3e50;
+        }
+
+        .reference-item {
+            background-color: #f8f9fa;
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-right: 3px solid var(--gray);
+        }
+
+        .reference-item h5 {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 2.5rem 0;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+            opacity: 0.8;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.7rem;
+            }
+            
+            section {
+                padding: 1.8rem;
+            }
+            
+            .protocol-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-icon {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
 </head>
-<body style="background:#111; color:#fff; font-family:sans-serif; text-align:center;">
-    <h3>دردشة سريعة</h3>
-    <div id="box" style="height:300px; overflow-y:auto; background:#000; padding:10px; margin:10px; border:1px solid #444;"></div>
-    <input type="text" id="in" style="width:80%; padding:10px;">
-    <button onclick="go()" style="padding:10px; background:#27ae60; color:#fff; border:none;">إرسال</button>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="header-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h1>موسوعة المزامنة الحيوية: بروتوكول "الطاقة والتركيز الفائق"</h1>
+                <p class="subtitle">الدليل الهندسي لاستعادة السيطرة على طاقتك عبر الساعة البيولوجية</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Section 1: Philosophy -->
+        <section id="philosophy">
+            <h2><i class="fas fa-question-circle"></i> [1] الفلسفة: لماذا سيفشل أي نظام آخر؟</h2>
+            <p>معظم الناس يعاملون أجسادهم كمحرك يعمل بالوقود فقط، لكن الحقيقة أن جسدك "ساعة كيميائية". تناول أقوى المنشطات في وقت "الهدم" سيؤدي لانهيارك، وتناول المهدئات في وقت "البناء" سيصيبك بالاكتئاب. هذا البروتوكول يصالحك مع جيناتك (Clock Genes) ليتحول جسدك من حالة "المقاومة" إلى حالة "التدفق".</p>
+        </section>
+
+        <!-- Section 2: Safety -->
+        <section id="safety">
+            <h2><i class="fas fa-shield-alt"></i> [2] ميثاق الأمان والمسؤولية الشخصية</h2>
+            <p class="warning-box"><i class="fas fa-exclamation-triangle"></i> يجب وضع هذا المربع في بداية الكتيب لضمان الحماية القانونية</p>
+            
+            <ul>
+                <li><strong>تنبيه:</strong> هذا الدليل يمثل تجميعاً لأبحاث الكرونوثيرابي والأعشاب، وليس بديلاً عن الطب.</li>
+                <li><strong>القيود:</strong> يمنع منعاً باتاً لمن يعاني من: (سيولة الدم، الفشل الكلوي، أمراض الكبد النشطة، الحوامل والمرضعات).</li>
+                <li><strong>القاعدة:</strong> "أنت طبيب نفسك الأول"؛ ابدأ بنصف الجرعات المذكورة لاختبار حساسية جسدك.</li>
+            </ul>
+        </section>
+
+        <!-- Section 3: Protocol -->
+        <section id="protocol">
+            <h2><i class="fas fa-cogs"></i> [3] التشريح العملي للبروتوكول اليومي</h2>
+            
+            <div class="protocol-grid">
+                <!-- Protocol 1 -->
+                <div class="protocol-card">
+                    <div class="protocol-time">07:00 ص - 08:30 ص</div>
+                    <h3>المحطة (1): "نافذة الإطلاق الحراري"</h3>
+                    
+                    <h4>الهدف الحجري:</h4>
+                    <p>كسر "جمود السكون" الصباحي ورفع التمثيل الغذائي الأساسي (BMR).</p>
+                    
+                    <h4>التركيبة الهندسية:</h4>
+                    <ul>
+                        <li>1 ملعقة صغيرة زنجبيل طازج مبشور (المادة الفعالة: Gingerol).</li>
+                        <li>قشر نصف ليمونة "عضوية" (المادة الفعالة: Limonene).</li>
+                        <li>"رشة" مجهرية من الفلفل الأسود.</li>
+                    </ul>
+                    
+                    <div class="protocol-hack">
+                        <h5><i class="fas fa-lightbulb"></i> سر المحترفين (The Hack):</h5>
+                        <p>إضافة الفلفل الأسود ليست للنكهة، بل لأن مادة (Piperine) تفتح "بوابات الامتصاص" في الأمعاء، مما يضاعف دخول جينجيرول الزنجبيل إلى دمك فوراً.</p>
+                    </div>
+                    
+                    <h4>التفسير البيولوجي:</h4>
+                    <p>عند الاستيقاظ تكون حرارة جسدك في أدنى مستوياتها. هذه الوصفة ترفع درجة الحرارة داخلياً (Thermogenesis)، مما يجبر الدماغ على إرسال إشارات "اليقظة التامة" دون الحاجة لرفع ضربات القلب بشكل مفاجئ مثل القهوة.</p>
+                </div>
+                
+                <!-- Protocol 2 -->
+                <div class="protocol-card">
+                    <div class="protocol-time">10:00 ص - 11:30 ص</div>
+                    <h3>المحطة (2): "ذروة الأداء السينابتي"</h3>
+                    
+                    <h4>الهدف الحجري:</h4>
+                    <p>تقليل "ضجيج" الدماغ وزيادة سرعة نقل الإشارات العصبية.</p>
+                    
+                    <h4>التركيبة الهندسية:</h4>
+                    <ul>
+                        <li>ملعقة صغيرة من إكليل الجبل (الروزماري) الجاف.</li>
+                        <li>5 أوراق من النعناع الفلفلي الطازج.</li>
+                    </ul>
+                    
+                    <div class="protocol-hack">
+                        <h5><i class="fas fa-lightbulb"></i> سر المحترفين (The Hack):</h5>
+                        <p>لا تشرب الكوب بمجرد تحضيره. استنشق البخار المتصاعد لمدة 30 ثانية قبل أول رشفة. زيت (1,8-cineole) الموجود في الروزماري يصل للدماغ عبر الشم أسرع من الهضم، ويبدأ في تثبيط إنزيم "أستيل كولين إستريز" المسؤول عن النسيان وتشتت الانتباه.</p>
+                    </div>
+                    
+                    <h4>التفسير البيولوجي:</h4>
+                    <p>في هذا الوقت يصل الكورتيزول لذروته. النعناع يعمل كـ "مبرد" للجهاز العصبي ليمنع التوتر، بينما يعمل الروزماري كـ "مسرّع" للتركيز.</p>
+                </div>
+                
+                <!-- Protocol 3 -->
+                <div class="protocol-card">
+                    <div class="protocol-time">02:00 م - 03:30 م</div>
+                    <h3>المحطة (3): "موازنة الأنسولين ومنع الانهيار"</h3>
+                    
+                    <h4>الهدف الحجري:</h4>
+                    <p>حماية الدماغ من "غيبوبة الطعام" (Post-Lunch Dip) ومنع تخزين الدهون.</p>
+                    
+                    <h4>التركيبة الهندسية:</h4>
+                    <ul>
+                        <li>عود قرفة "سي لانية" (Cylon) حصراً.</li>
+                        <li>3 حبات مسمار (قرنفل).</li>
+                    </ul>
+                    
+                    <div class="protocol-hack">
+                        <h5><i class="fas fa-lightbulb"></i> سر المحترفين (The Hack):</h5>
+                        <p>أضف عود القرفة إلى الماء وهو بارد ثم ابدأ الغلي. هذا يستخرج مادة (MHCP) التي تحاكي عمل الأنسولين وتجعل خلاياك تستهلك السكر فوراً بدلاً من شعورك بالنعاس.</p>
+                    </div>
+                    
+                    <h4>التفسير البيولوجي:</h4>
+                    <p>بعد الغداء، يسحب الجهاز الهضمي معظم الدم والقدرة الطاقية. القرنفل يحفز إنزيمات الهضم بينما تمنع القرفة تذبذب سكر الدم، مما يحافظ على طاقة دماغك مستقرة كأنك لم تأكل وجبة دسمة.</p>
+                </div>
+                
+                <!-- Protocol 4 -->
+                <div class="protocol-card">
+                    <div class="protocol-time">08:30 م - 10:00 م</div>
+                    <h3>المحطة (4): "الترميم الخلوي العميق"</h3>
+                    
+                    <h4>الهدف الحجري:</h4>
+                    <p>خفض "الالتهاب العصبي" وتحفيز هرمون النمو الطبيعي أثناء النوم.</p>
+                    
+                    <h4>التركيبة الهندسية:</h4>
+                    <ul>
+                        <li>ملعقة كبيرة زهور البابونج الكاملة.</li>
+                        <li>نصف ملعقة يانسون (أو شمر).</li>
+                    </ul>
+                    
+                    <div class="protocol-hack">
+                        <h5><i class="fas fa-lightbulb"></i> سر المحترفين (The Hack):</h5>
+                        <p>انقع الأعشاب في كوب مغطى لمدة 12 دقيقة كاملة. مادة (Apigenin) في البابونج تحتاج وقتاً أطول للتحلل في الماء، وهي المادة التي ترتبط بمستقبلات "البنزوديازيبين" في دماغك لتعطيك تأثيراً مهدئاً طبيعياً 100%.</p>
+                    </div>
+                    
+                    <h4>التفسير البيولوجي:</h4>
+                    <p>اليانسون يريح عضلات الجهاز الهضمي (التي تتوتر بسبب إجهاد اليوم)، مما يعطي إشارة للدماغ بأن "البيئة آمنة" للدخول في نوم عميق (Deep Sleep) وهو الوقت الذي يقوم فيه الجسد بإصلاح الـ DNA التالف.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Prohibitions -->
+        <section id="prohibitions">
+            <h2><i class="fas fa-ban"></i> [4] قائمة الممنوعات (الخط الأحمر)</h2>
+            
+            <div class="safety-section">
+                <ul>
+                    <li><strong>القرفة والقرنفل:</strong> "ممنوع" لمن يتناول (الأسبرين، بلا فيكس، وارفارين) - خطر النزيف.</li>
+                    <li><strong>الزنجبيل:</strong> "ممنوع" لمن لديه تاريخ مع حصوات المرارة.</li>
+                    <li><strong>الروزماري:</strong> "ممنوع" لمن يعاني من نوبات صرع أو ضغط دم مرتفع جداً وغير منضبط.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 5: References -->
+        <section id="references">
+            <h2><i class="fas fa-book"></i> القسم الخامس: الملحق العلمي والمراجع - Scientific References</h2>
+            
+            <div class="reference-item">
+                <h5>1. المزامنة الحيوية والتمثيل الغذائي:</h5>
+                <p><strong>المصدر:</strong> "Circadian rhythms and metabolic syndrome" - Journal of Clinical Investigation.</p>
+                <p><strong>الربط العلمي:</strong> دراسة دور النباتات الحرارية (الزنجبيل) في تنشيط جينات (Clock Genes) المسؤولة عن بدء حرق الطاقة الصباحي.</p>
+            </div>
+            
+            <div class="reference-item">
+                <h5>2. الروزماري والأداء الإدراكي:</h5>
+                <p><strong>المصدر:</strong> "Plasma 1,8-cineole correlates with cognitive performance" - Therapeutic Advances in Psychopharmacology.</p>
+                <p><strong>الربط العلمي:</strong> إثبات أن استنشاق وامتصاص مركبات الروزماري يثبط إنزيم (AChE) مما يرفع مستويات التركيز الذهني.</p>
+            </div>
+            
+            <div class="reference-item">
+                <h5>3. القرفة وضبط سكر الدم:</h5>
+                <p><strong>المصدر:</strong> "Cinnamon: Potential Role in the Management of Insulin Resistance" - European Journal of Clinical Investigation.</p>
+                <p><strong>الربط العلمي:</strong> دور مركبات البوليفينول في محاكاة الأنسولين ومنع الانهيار الطاقي بعد الوجبات.</p>
+            </div>
+            
+            <div class="reference-item">
+                <h5>4. البابونج ومستقبلات الجهاز العصبي:</h5>
+                <p><strong>المصدر:</strong> "Chamomile: A herbal medicine of the past with bright future" - Molecular Medicine Reports.</p>
+                <p><strong>الربط العلمي:</strong> تأثير مادة (Apigenin) في الارتباط بمستقبلات GABA لتهيئة الجسد للنوم العميق والترميم الخلوي.</p>
+            </div>
+        </section>
+
+        <!-- Section 6: Safety Guide -->
+        <section id="safety-guide">
+            <h2><i class="fas fa-exclamation-triangle"></i> القسم السادس: الدليل الشامل للموانع والتحذيرات - Safety Guide</h2>
+            
+            <div class="warning-box">
+                <h4><i class="fas fa-skull-crossbones"></i> تنبيه: الأعشاب هي كيمياء طبيعية مركزة، والالتزام بالتحذيرات التالية ليس اختيارياً:</h4>
+            </div>
+            
+            <h3>1. القرفة والقرنفل:</h3>
+            <ul>
+                <li>يمنع تماماً لمن يتناول أدوية سيولة الدم (مثل: وارفارين، أسبرين، بلا فيكس) بسبب خطر النزيف.</li>
+                <li>يجب التوقف عن تناولهما قبل أي إجراء جراحي بـ 14 يوماً على الأقل.</li>
+            </ul>
+            
+            <h3>2. الزنجبيل:</h3>
+            <ul>
+                <li>يمنع لمن يعاني من حصوات المرارة النشطة لأنه يحفز إفراز الصفراء.</li>
+                <li>يجب الحذر لمرضى الضغط الذين يتناولون (حاصرات قنوات الكالسيوم).</li>
+            </ul>
+            
+            <h3>3. الروزماري (إكليل الجبل):</h3>
+            <ul>
+                <li>يمنع لمن لديهم تاريخ مع نوبات الصرع أو الاضطرابات العصبيّة التشنجية.</li>
+                <li>يمنع استخدامه بجرعات علاجية أثناء فترة الحمل (محفز رحمي).</li>
+            </ul>
+            
+            <h3>4. البابونج واليانسون:</h3>
+            <ul>
+                <li>يمنع لمن لديهم حساسية من عائلة النباتات النجمية (مثل الأقحوان).</li>
+                <li>يمنع في حالات الأورام الحساسة للهرمونات (مثل أورام الثدي الليفية) نظراً للنشاط الاستروجيني الضعيف لليانسون.</li>
+            </ul>
+        </section>
+
+        <!-- Section 7: Disclaimer -->
+        <section id="disclaimer">
+            <div class="disclaimer">
+                <h2><i class="fas fa-gavel"></i> القسم السابع: إخلاء المسؤولية القانوني - Final Disclaimer</h2>
+                
+                <p>"بتحميلك واستخدامك لهذا البروتوكول، أنت تقر وتوافق على الآتي:</p>
+                
+                <ol>
+                    <li>المعلومات الواردة هي لأغراض تعليمية وتثقيفية فقط ولا تشكل تشخيصاً أو علاجاً طبياً.</li>
+                    <li>الناشر والمؤلف غير مسؤولين عن أي أضرار صحية أو قانونية ناتجة عن تطبيق هذه المعلومات أو تجاهل التحذيرات المذكورة.</li>
+                    <li>تقع على عاتق المستخدم وحده مسؤولية استشارة الطبيب المختص قبل البدء بالبروتوكول، خاصة في حالة وجود أمراض مزمنة أو تناول أدوية دورية.</li>
+                    <li>هذا الكتيب لا يضمن نتائج محددة، حيث تختلف استجابة الأجسام بناءً على العوامل الوراثية والبيئية."</li>
+                </ol>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo">
+                <i class="fas fa-seedling"></i>
+            </div>
+            <p>موسوعة المزامنة الحيوية: بروتوكول "الطاقة والتركيز الفائق"</p>
+            <p>الدليل الهندسي لاستعادة السيطرة على طاقتك عبر الساعة البيولوجية</p>
+            <p>© جميع الحقوق محفوظة - للاستخدام الشخصي والتعليمي فقط</p>
+        </div>
+    </footer>
 
     <script>
-        const _k = "hf_" + "QJRfpZjaLXwySYNDrhd" + "VuuhAcLDxnnEWmN";
-        async function go() {
-            const msg = document.getElementById('in').value;
-            const box = document.getElementById('box');
-            if(!msg) return;
-
-            box.innerHTML += `<div><b>أنت:</b> ${msg}</div>`;
-            
-            // الرابط الجديد اللي السيرفر طلبه + البروكسي اللي كسر الحظر
-            const url = "https://router.huggingface.co/models/facebook/blenderbot-400M-distill";
-            const proxy = "https://corsproxy.io/?";
-
-            try {
-                const r = await fetch(proxy + encodeURIComponent(url), {
-                    method: "POST",
-                    headers: {"Authorization": "Bearer " + _k, "Content-Type": "application/json"},
-                    body: JSON.stringify({inputs: msg})
-                });
-                const d = await r.json();
-                const res = d.generated_text || d[0].generated_text || JSON.stringify(d);
-                box.innerHTML += `<div style="color:#27ae60"><b>AI:</b> ${res}</div>`;
-            } catch(e) {
-                box.innerHTML += `<div style="color:red">خطأ في الشبكة</div>`;
-            }
-            document.getElementById('in').value = "";
-        }
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add subtle animation to protocol cards on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Apply animation to protocol cards
+        document.querySelectorAll('.protocol-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(card);
+        });
+        
+        // Apply animation to sections
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(section);
+        });
+        
+        // Initialize all sections as visible after a short delay
+        setTimeout(() => {
+            document.querySelectorAll('section, .protocol-card').forEach(el => {
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            });
+        }, 300);
     </script>
 </body>
-</html>
+                </html>
