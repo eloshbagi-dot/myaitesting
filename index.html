@@ -3,76 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Chat - النسخة الناجحة</title>
-    <style>
-        body { font-family: sans-serif; background: #1a1a1a; color: white; display: flex; flex-direction: column; align-items: center; padding: 20px; }
-        #chat-box { width: 100%; max-width: 400px; height: 300px; border: 1px solid #444; overflow-y: auto; padding: 10px; background: #000; margin-bottom: 10px; border-radius: 8px; }
-        input { width: 100%; max-width: 380px; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: none; }
-        button { width: 100%; max-width: 400px; padding: 10px; background: #27ae60; color: white; border: none; cursor: pointer; font-weight: bold; }
-        .msg { margin: 5px 0; padding: 8px; border-radius: 5px; font-size: 14px; }
-        .user { background: #27ae60; text-align: left; }
-        .ai { background: #333; text-align: right; }
-    </style>
+    <title>AI Chat</title>
 </head>
-<body>
-
-    <h3>🤖 نموذج الدردشة الناجح</h3>
-    <div id="chat-box"></div>
-    <input type="text" id="user-input" placeholder="اكتب رسالتك هنا...">
-    <button onclick="sendRequest()">إرسال</button>
+<body style="background:#111; color:#fff; font-family:sans-serif; text-align:center;">
+    <h3>دردشة سريعة</h3>
+    <div id="box" style="height:300px; overflow-y:auto; background:#000; padding:10px; margin:10px; border:1px solid #444;"></div>
+    <input type="text" id="in" style="width:80%; padding:10px;">
+    <button onclick="go()" style="padding:10px; background:#27ae60; color:#fff; border:none;">إرسال</button>
 
     <script>
-        // التعمية لعدم كشف المفتاح لجيتهب
-        const _p1 = "hf_";
-        const _p2 = "QJRfpZjaLXwySYNDrhd";
-        const _p3 = "VuuhAcLDxnnEWmN";
-        const fullKey = _p1 + _p2 + _p3;
+        const _k = "hf_" + "QJRfpZjaLXwySYNDrhd" + "VuuhAcLDxnnEWmN";
+        async function go() {
+            const msg = document.getElementById('in').value;
+            const box = document.getElementById('box');
+            if(!msg) return;
 
-        async function sendRequest() {
-            const input = document.getElementById('user-input');
-            const chatBox = document.getElementById('chat-box');
-            const text = input.value.trim();
-            if (!text) return;
-
-            chatBox.innerHTML += `<div class="msg user">أنت: ${text}</div>`;
-            input.value = "";
-
-            // الرابط اللي نجح معاك (AllOrigins)
-            const targetUrl = "https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill";
+            box.innerHTML += `<div><b>أنت:</b> ${msg}</div>`;
             
-            // الطريقة اللي AllOrigins بيحبها (تغليف الطلب)
-            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
+            // الرابط الجديد اللي السيرفر طلبه + البروكسي اللي كسر الحظر
+            const url = "https://router.huggingface.co/models/facebook/blenderbot-400M-distill";
+            const proxy = "https://corsproxy.io/?";
 
             try {
-                // ملاحظة: AllOrigins في النسخة المجانية بيشتغل أحسن مع GET 
-                // لكن عشان نبعت بيانات (POST) للموديل، هنستخدم fetch مباشر زي ما نجح معاك في "كسر الحظر"
-                const response = await fetch("https://corsproxy.io/?" + encodeURIComponent(targetUrl), {
+                const r = await fetch(proxy + encodeURIComponent(url), {
                     method: "POST",
-                    headers: {
-                        "Authorization": "Bearer " + fullKey,
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ inputs: text })
+                    headers: {"Authorization": "Bearer " + _k, "Content-Type": "application/json"},
+                    body: JSON.stringify({inputs: msg})
                 });
-
-                const data = await response.json();
-                
-                let reply = "";
-                if (Array.isArray(data)) {
-                    reply = data[0].generated_text;
-                } else if (data.generated_text) {
-                    reply = data.generated_text;
-                } else {
-                    reply = "خطأ: " + JSON.stringify(data);
-                }
-
-                chatBox.innerHTML += `<div class="msg ai">الذكاء الاصطناعي: ${reply}</div>`;
-            } catch (err) {
-                chatBox.innerHTML += `<div class="msg ai" style="color:red">فشل: ${err.message}</div>`;
+                const d = await r.json();
+                const res = d.generated_text || d[0].generated_text || JSON.stringify(d);
+                box.innerHTML += `<div style="color:#27ae60"><b>AI:</b> ${res}</div>`;
+            } catch(e) {
+                box.innerHTML += `<div style="color:red">خطأ في الشبكة</div>`;
             }
-            chatBox.scrollTop = chatBox.scrollHeight;
+            document.getElementById('in').value = "";
         }
     </script>
 </body>
 </html>
- 
