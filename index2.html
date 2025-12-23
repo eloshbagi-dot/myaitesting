@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موسوعة المزامنة الحيوية: بروتوكول "إدارة الوزن وحرق الدهون"</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2a6e3f;
+            --secondary: #e9b44c;
+            --accent: #9d4edd;
+            --light: #f5f7f0;
+            --dark: #1a2c1e;
+            --success: #4c956c;
+            --warning: #d00000;
+            --gray: #5a6d5c;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.8;
+            color: var(--dark);
+            background-color: var(--light);
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, #1e4628 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 8px solid var(--secondary);
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 1.5rem;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .header-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Main Content */
+        main {
+            padding: 3rem 0;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 2.5rem;
+            border-right: 5px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        section:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+
+        h2 i {
+            margin-left: 10px;
+            color: var(--accent);
+        }
+
+        h3 {
+            color: var(--accent);
+            font-size: 1.6rem;
+            margin: 1.8rem 0 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        h3 i {
+            margin-left: 10px;
+        }
+
+        h4 {
+            color: var(--success);
+            font-size: 1.3rem;
+            margin: 1.5rem 0 0.8rem;
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        ul, ol {
+            margin-right: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-right: 1.5rem;
+        }
+
+        li:before {
+            content: "•";
+            color: var(--secondary);
+            font-weight: bold;
+            position: absolute;
+            right: 0;
+        }
+
+        .warning-box {
+            background-color: #fff8f8;
+            border-right: 5px solid var(--warning);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box h4 {
+            color: var(--warning);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .warning-box h4 i {
+            margin-left: 10px;
+        }
+
+        .protocol-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .protocol-card {
+            background: #f9f7f2;
+            border-radius: 10px;
+            padding: 1.8rem;
+            border-top: 5px solid var(--accent);
+            transition: var(--transition);
+            height: 100%;
+        }
+
+        .protocol-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .protocol-time {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .protocol-hack {
+            background-color: #e8f4f8;
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin: 1.2rem 0;
+            border-right: 4px solid #3498db;
+        }
+
+        .protocol-hack h5 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .protocol-hack h5 i {
+            margin-left: 8px;
+        }
+
+        .safety-section {
+            background-color: #fef9f3;
+            border: 2px dashed var(--warning);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .disclaimer {
+            background-color: #f2f7ff;
+            border: 2px solid #b3c6e7;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .disclaimer h3 {
+            color: #2c3e50;
+        }
+
+        .reference-item {
+            background-color: #f8f9fa;
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-right: 3px solid var(--gray);
+            transition: var(--transition);
+        }
+
+        .reference-item:hover {
+            background-color: #e9ecef;
+            transform: translateX(-5px);
+        }
+
+        .reference-item h5 {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .reference-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .reference-link:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        .reference-link i {
+            margin-left: 5px;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 2.5rem 0;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+            opacity: 0.8;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.7rem;
+            }
+            
+            section {
+                padding: 1.8rem;
+            }
+            
+            .protocol-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-icon {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="header-icon">
+                    <i class="fas fa-weight"></i>
+                </div>
+                <h1>موسوعة المزامنة الحيوية: بروتوكول "إدارة الوزن وحرق الدهون"</h1>
+                <p class="subtitle">دليل إعادة برمجة الأيض عبر المزامنة الهرمونية والهندسة العشبية</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Section 1: Philosophy -->
+        <section id="philosophy">
+            <h2><i class="fas fa-question-circle"></i> [1] الفلسفة: لماذا لا تفقد الوزن رغم الحمية؟</h2>
+            <p>السر لا يكمن دائماً في "كمية" السعرات، بل في "مقاومة الأنسولين الزمانية". جسدك مبرمج لحرق السكر في ساعات معينة، وتخزين الدهون في ساعات أخرى. هذا البروتوكول لا يركز على الحرمان، بل على استغلال ذروة نشاط الغدة الدرقية وحساسية الأنسولين الطبيعية لإعادة ضبط "نقطة الصفر" لوزنك.</p>
+        </section>
+
+        <!-- Section 2: Protocol -->
+        <section id="protocol">
+            <h2><i class="fas fa-cogs"></i> [2] التشريح العملي للبروتوكول اليومي</h2>
+            
+            <div class="protocol-grid">
+                <!-- Protocol 1 -->
+                <div class="protocol-card">
+                    <div class="protocol-time">07:30 ص - 09:00 ص</div>
+                    <h3>المحطة (1): "نافذة الإطلاق الأيضي"</h3>
+                    
+                    <h4>الهدف:</h4>
+                    <p>تحويل الجسد من حالة "تخزين الجليكوجين" إلى حالة "أكسدة الدهون".</p>
+                    
+                    <h4>التركيبة الهندسية:</h4>
+                    <ul>
+                        <li>ملعقة صغيرة شاي أخضر عالي الجودة (عضوي).</li>
+                        <li>نصف ملعقة صغيرة من بودرة الزنجبيل.</li>
+                        <li>عصرة نصف ليمونة طازجة.</li>
+                    </ul>
+                    
+                    <h4>طريقة التحضير:</h4>
+                    <p>نقع المكونات في ماء بحرارة 80 درجة (ليس مغلياً) لمدة 3 دقائق.</p>
+                    
+                    <h4>بماذا سيشعر المستخدم؟:</h4>
+                    <p>دفء داخلي فوري، انخفاض في شهية الصباح الكاذبة، وشعور بـ "اليقظة الخلوية".</p>
+                    
+                    <div class="protocol-hack">
+                        <h5><i class="fas fa-lightbulb"></i> [Protocol Hack]:</h5>
+                        <p>مادة (EGCG) في الشاي الأخضر لا تعمل بكفاءة إلا في بيئة حمضية، إضافة الليمون تضاعف استخلاص مضادات الأكسدة الحارقة للدهون بنسبة 300%.</p>
+                    </div>
+                </div>
+                
+                <!-- Protocol 2 -->
+                <div class="protocol-card">
+                    <div class="protocol-time">12:00 م - 01:30 م</div>
+                    <h3>المحطة (2): "كابت الشهية الميكانيكي"</h3>
+                    
+                    <h4>الهدف:</h4>
+                    <p>تقليل استجابة الأنسولين للوجبة الرئيسية ومنع تخزين الدهون في منطقة البطن.</p>
+                    
+                    <h4>التركيبة الهندسية:</h4>
+                    <ul>
+                        <li>ملعقة كبيرة من بذور القاطونة (السيليوم) أو بذور الكتان المطحونة حديثاً.</li>
+                        <li>كوب كبير من الماء الدافئ.</li>
+                    </ul>
+                    
+                    <h4>طريقة التحضير:</h4>
+                    <p>تخلط البذور في الماء وتشرب فوراً قبل الوجبة بـ 20 دقيقة.</p>
+                    
+                    <h4>بماذا سيشعر المستخدم؟:</h4>
+                    <p>امتلاء في المعدة، هدوء في الرغبة في تناول كميات كبيرة، واختفاء "خمول ما بعد الأكل".</p>
+                    
+                    <div class="protocol-hack">
+                        <h5><i class="fas fa-lightbulb"></i> [Protocol Hack]:</h5>
+                        <p>هذه الألياف تخلق هلاماً يبطئ امتصاص الكربوهيدرات، مما يمنع "سبايك" الأنسولين الذي يعتبر المفتاح الرئيسي لتخزين الدهون.</p>
+                    </div>
+                </div>
+                
+                <!-- Protocol 3 -->
+                <div class="protocol-card">
+                    <div class="protocol-time">04:00 م - 05:30 م</div>
+                    <h3>المحطة (3): "مسرّع الأيض والديتوكس"</h3>
+                    
+                    <h4>الهدف:</h4>
+                    <p>تنشيط الدورة الليمفاوية ومنع الالتهاب الأيضي (Inflammaging).</p>
+                    
+                    <h4>التركيبة الهندسية:</h4>
+                    <ul>
+                        <li>ملعقة صغيرة كركم + رشة فلفل أسود (إلزامية).</li>
+                        <li>عود قرفة سي لانية.</li>
+                    </ul>
+                    
+                    <h4>طريقة التحضير:</h4>
+                    <p>غلي عود القرفة لمد دقيقتين، ثم إضافة الكركم والفلفل ونقعهم لـ 5 دقائق.</p>
+                    
+                    <h4>بماذا سيشعر المستخدم؟:</h4>
+                    <p>نشاط في الدورة الدموية، انخفاض في الرغبة في "السناكس" المسائية، وتقليل احتباس السوائل.</p>
+                    
+                    <div class="protocol-hack">
+                        <h5><i class="fas fa-lightbulb"></i> [Protocol Hack]:</h5>
+                        <p>تناول هذه الوصفة مع 3 حبات لوز؛ الكركم يذوب في الدهون، وبدون مصدر دهني لن يمتصه جسدك.</p>
+                    </div>
+                </div>
+                
+                <!-- Protocol 4 -->
+                <div class="protocol-card">
+                    <div class="protocol-time">09:00 م - 10:30 م</div>
+                    <h3>المحطة (4): "مُحفز الحرق الليلي"</h3>
+                    
+                    <h4>الهدف:</h4>
+                    <p>خفض سكر الدم لأدنى مستوياته لتحفيز هرمون النمو (GH) الحارق للدهون ليلاً.</p>
+                    
+                    <h4>التركيبة الهندسية:</h4>
+                    <ul>
+                        <li>ملعقة من أوراق المرمية أو أوراق التوت.</li>
+                    </ul>
+                    
+                    <h4>طريقة التحضير:</h4>
+                    <p>نقع في ماء ساخن لمدة 10 دقائق (تغطية الكوب ضرورية).</p>
+                    
+                    <h4>بماذا سيشعر المستخدم؟:</h4>
+                    <p>استرخاء عميق، واستيقاظ في اليوم التالي ببطن أكثر تسطحاً (نتيجة تحسين حساسية الأنسولين الليلية).</p>
+                    
+                    <div class="protocol-hack">
+                        <h5><i class="fas fa-lightbulb"></i> [Protocol Hack]:</h5>
+                        <p>التوقف عن الطعام قبل هذا الكوب بساعتين يضمن دخول جسدك في حالة "الالتهام الذاتي" (Autophagy) للدهون التالفة.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: References -->
+        <section id="references">
+            <h2><i class="fas fa-book"></i> [3] الملحق العلمي والمراجع (Scientific References)</h2>
+            
+            <div class="reference-item">
+                <h5>1. أكسدة الدهون والشاي الأخضر:</h5>
+                <p>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/18326618/" target="_blank" class="reference-link">
+                        <i class="fas fa-external-link-alt"></i> American Journal of Clinical Nutrition
+                    </a>: دراسة تثبت دور EGCG في رفع حرق الدهون خلال فترات الراحة.
+                </p>
+                <p><strong>الربط العلمي:</strong> دراسة تثبت دور EGCG في رفع حرق الدهون خلال فترات الراحة.</p>
+            </div>
+            
+            <div class="reference-item">
+                <h5>2. الألياف الذائبة والأنسولين:</h5>
+                <p>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/12209371/" target="_blank" class="reference-link">
+                        <i class="fas fa-external-link-alt"></i> European Journal of Clinical Nutrition
+                    </a>: بحث يوضح كيف تقلل بذور السيليوم من استجابة الجلوكوز بعد الوجبات.
+                </p>
+                <p><strong>الربط العلمي:</strong> بحث يوضح كيف تقلل بذور السيليوم من استجابة الجلوكوز بعد الوجبات.</p>
+            </div>
+            
+            <div class="reference-item">
+                <h5>3. الكركمين والالتهاب المسبب للسمنة:</h5>
+                <p>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/22773702/" target="_blank" class="reference-link">
+                        <i class="fas fa-external-link-alt"></i> Diabetes Care
+                    </a>: دراسة حول دور الكركمين في تحسين حساسية الأنسولين وتقليل الالتهاب الخلوي.
+                </p>
+                <p><strong>الربط العلمي:</strong> دراسة حول دور الكركمين في تحسين حساسية الأنسولين وتقليل الالتهاب الخلوي.</p>
+            </div>
+            
+            <div class="reference-item">
+                <h5>4. المرمية وضبط سكر الدم:</h5>
+                <p>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/25440378/" target="_blank" class="reference-link">
+                        <i class="fas fa-external-link-alt"></i> Complementary Therapies in Medicine
+                    </a>: بحث يثبت فاعلية المرمية في خفض مستويات الجلوكوز بما يحاكي بعض الأدوية.
+                </p>
+                <p><strong>الربط العلمي:</strong> بحث يثبت فاعلية المرمية في خفض مستويات الجلوكوز بما يحاكي بعض الأدوية.</p>
+            </div>
+        </section>
+
+        <!-- Section 4: Safety Guide -->
+        <section id="safety-guide">
+            <h2><i class="fas fa-exclamation-triangle"></i> [4] الدليل الأمني للموانع (Safety Guide)</h2>
+            
+            <div class="warning-box">
+                <h4><i class="fas fa-skull-crossbones"></i> تنبيه: الأعشاب هي كيمياء طبيعية مركزة، والالتزام بالتحذيرات التالية ليس اختيارياً</h4>
+            </div>
+            
+            <div class="safety-section">
+                <ul>
+                    <li><strong>الشاي الأخضر:</strong> يمنع لمرضى الأنيميا الحادة (يؤخذ بعيداً عن الوجبات بـ ساعتين).</li>
+                    <li><strong>بذور القاطونة:</strong> يجب شرب لتر ماء إضافي؛ يمنع لمن لديهم ضيق في المريء أو انسداد معوي.</li>
+                    <li><strong>الكركم والقرفة:</strong> "خطر" لمرضى سيولة الدم ومستخدمي الأسبرين/الوارفارين.</li>
+                    <li><strong>المرمية:</strong> يمنع تماماً للمرضعات (تجفف الحليب) وللحوامل.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 5: Disclaimer -->
+        <section id="disclaimer">
+            <div class="disclaimer">
+                <h2><i class="fas fa-gavel"></i> [5] إخلاء مسؤولية</h2>
+                
+                <p>"هذا البروتوكول دليل تعليمي لمزامنة نمط الحياة مع الساعة البيولوجية. لا يعتبر بديلاً عن العلاج الطبي. تقع مسؤولية التطبيق على المستخدم، ويجب استشارة الطبيب قبل البدء خاصة لمرضى السكري والضغط."</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo">
+                <i class="fas fa-leaf"></i>
+            </div>
+            <p>موسوعة المزامنة الحيوية: بروتوكول "إدارة الوزن وحرق الدهون"</p>
+            <p>دليل إعادة برمجة الأيض عبر المزامنة الهرمونية والهندسة العشبية</p>
+            <p>© جميع الحقوق محفوظة - للاستخدام الشخصي والتعليمي فقط</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add subtle animation to protocol cards on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Apply animation to protocol cards
+        document.querySelectorAll('.protocol-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(card);
+        });
+        
+        // Apply animation to sections
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(section);
+        });
+        
+        // Initialize all sections as visible after a short delay
+        setTimeout(() => {
+            document.querySelectorAll('section, .protocol-card').forEach(el => {
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            });
+        }, 300);
+    </script>
+</body>
+  </html> 
