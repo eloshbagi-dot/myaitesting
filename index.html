@@ -2,107 +2,61 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مختبر الذكاء الاصطناعي - نسخة GitHub</title>
+    <title>إصلاح نهائي</title>
     <style>
-        body { font-family: system-ui, sans-serif; background: #f0f2f5; padding: 20px; direction: rtl; }
-        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .messages { height: 350px; overflow-y: auto; border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 8px; background: #fafafa; display: flex; flex-direction: column; }
-        .msg { margin: 8px 0; padding: 12px; border-radius: 12px; max-width: 85%; line-height: 1.5; position: relative; }
-        .user { background: #007bff; color: white; align-self: flex-start; border-bottom-right-radius: 2px; }
-        .bot { background: #e9ecef; color: black; align-self: flex-end; border-bottom-left-radius: 2px; }
-        .error { background: #fee; color: #b00; border: 1px solid #fcc; align-self: center; }
-        input, select, button { width: 100%; padding: 12px; margin-top: 10px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; }
-        button { background: #28a745; color: white; cursor: pointer; border: none; font-weight: bold; transition: 0.3s; }
-        button:hover { background: #218838; }
-        button:disabled { background: #ccc; }
-        .status-dot { height: 10px; width: 10px; background-color: #bbb; border-radius: 50%; display: inline-block; margin-left: 5px; }
-        .online { background-color: #28a745; }
+        body { font-family: sans-serif; padding: 20px; background: #eee; text-align: center; }
+        #debug-log { background: #333; color: #0f0; padding: 10px; text-align: left; font-family: monospace; height: 100px; overflow: auto; margin-top: 10px; border-radius: 5px; font-size: 12px; }
+        .card { background: white; padding: 20px; border-radius: 10px; max-width: 500px; margin: auto; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        input { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+        button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>🚀 تجربة النماذج السريعة</h2>
-    <input type="password" id="api-key" placeholder="أدخل مفتاح hf_ الخاص بك...">
+<div class="card">
+    <h3>🛠️ فاحص الاتصال بـ Hugging Face</h3>
+    <input type="password" id="key" placeholder="hf_... الصق المفتاح هنا">
+    <input type="text" id="msg" placeholder="اكتب أي كلمة (Hello مثلاً)">
+    <button onclick="testConnection()">اختبار الآن</button>
     
-    <select id="model-select">
-        <option value="facebook/blenderbot-400M-distill">Blenderbot (خفيف جداً - للمشاكل التقنية)</option>
-        <option value="google/gemma-2-2b-it">Gemma 2b (ذكي جداً في العربي)</option>
-        <option value="HuggingFaceH4/zephyr-7b-beta">Zephyr 7B (قوي وشامل)</option>
-    </select>
-
-    <div class="messages" id="chat-box">
-        <div class="msg bot">أهلاً بك! ضع المفتاح في الأعلى ثم ابدأ الدردشة.</div>
-    </div>
-
-    <input type="text" id="user-input" placeholder="اكتب سؤالك هنا...">
-    <button onclick="askAI()" id="send-btn">إرسال</button>
+    <div id="result" style="margin-top: 20px; font-weight: bold;"></div>
+    
+    <div id="debug-log">سيتم طباعة تفاصيل المشكلة هنا...</div>
 </div>
 
 <script>
-    async function askAI() {
-        const key = document.getElementById('api-key').value.trim();
-        const model = document.getElementById('model-select').value;
-        const inputField = document.getElementById('user-input');
-        const input = inputField.value.trim();
-        const btn = document.getElementById('send-btn');
-        const box = document.getElementById('chat-box');
-
-        if(!key || !input) {
-            alert("من فضلك أدخل المفتاح والسؤال");
-            return;
-        }
-
-        // إضافة رسالة المستخدم
-        box.innerHTML += `<div class="msg user">${input}</div>`;
-        box.scrollTop = box.scrollHeight;
+    async function testConnection() {
+        const key = document.getElementById('key').value.trim();
+        const msg = document.getElementById('msg').value;
+        const log = document.getElementById('debug-log');
+        const res = document.getElementById('result');
         
-        inputField.value = "";
-        btn.disabled = true;
-        btn.innerText = "جاري التفكير...";
+        log.innerHTML = "بدء الاتصال...";
+        res.innerText = "جاري المحاولة...";
 
         try {
-            const response = await fetch(`https://api-inference.huggingface.co/models/${model}`, {
+            // سنستخدم موديل صغير جداً للتجربة
+            const response = await fetch("https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill", {
                 method: "POST",
-                headers: { 
-                    "Authorization": `Bearer ${key}`,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ 
-                    inputs: input,
-                    parameters: { max_new_tokens: 250, return_full_text: false }
-                }),
+                headers: { "Authorization": `Bearer ${key}`, "Content-Type": "application/json" },
+                body: JSON.stringify({ inputs: msg })
             });
 
             const data = await response.json();
+            log.innerHTML = "كود الحالة: " + response.status + "\n" + JSON.stringify(data);
 
             if (response.ok) {
-                // استخراج النص حسب شكل استجابة الموديل
-                let reply = "";
-                if (Array.isArray(data)) {
-                    reply = data[0].generated_text || data[0].translation_text || "رد غير معروف";
-                } else {
-                    reply = data.generated_text || "رد غير معروف";
-                }
-                box.innerHTML += `<div class="msg bot">${reply}</div>`;
+                res.style.color = "green";
+                res.innerText = "✅ نجح الاتصال! الرد: " + (data[0]?.generated_text || "لا يوجد نص");
             } else {
-                // معالجة أخطاء الـ API (مثل الموديل يحمل أو المفتاح خطأ)
-                let errorMsg = data.error || "خطأ غير معروف";
-                if (errorMsg.includes("currently loading")) {
-                    box.innerHTML += `<div class="msg error">⏳ الموديل يتم تجهيزه حالياً على سيرفرات Hugging Face، انتظر 20 ثانية وجرب مجدداً.</div>`;
-                } else {
-                    box.innerHTML += `<div class="msg error">❌ خطأ: ${errorMsg}</div>`;
-                }
+                res.style.color = "red";
+                res.innerText = "❌ فشل: " + (data.error || "خطأ غير معروف");
             }
-        } catch (e) {
-            box.innerHTML += `<div class="msg error">📡 خطأ في الاتصال: تأكد من الإنترنت أو صلاحية المفتاح.</div>`;
-            console.error(e);
+        } catch (err) {
+            log.innerHTML = "خطأ برمجي: " + err.message;
+            res.style.color = "orange";
+            res.innerText = "⚠️ خطأ في الشبكة أو CORS";
         }
-
-        btn.disabled = false;
-        btn.innerText = "إرسال";
-        box.scrollTop = box.scrollHeight;
     }
 </script>
 
