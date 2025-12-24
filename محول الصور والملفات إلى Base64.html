@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محول الصور والملفات إلى Base64 - يعمل دون اتصال</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+        
+        .offline-badge {
+            display: inline-block;
+            background-color: #27ae60;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+        
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .upload-section, .result-section {
+            flex: 1;
+            min-width: 300px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+        }
+        
+        .section-title {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            color: #3498db;
+        }
+        
+        .upload-area {
+            border: 3px dashed #bdc3c7;
+            border-radius: 10px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 25px;
+        }
+        
+        .upload-area:hover {
+            border-color: #3498db;
+            background-color: #f8fafc;
+        }
+        
+        .upload-area i {
+            font-size: 3.5rem;
+            color: #3498db;
+            margin-bottom: 15px;
+        }
+        
+        .upload-area h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .upload-area p {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+        
+        .browse-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .browse-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .selected-file {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .selected-file.active {
+            display: block;
+        }
+        
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .file-icon {
+            font-size: 2.5rem;
+            color: #3498db;
+        }
+        
+        .file-details h4 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .file-details p {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .preview-container {
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .preview-container img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .no-preview {
+            color: #95a5a6;
+            font-style: italic;
+            padding: 20px;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .convert-btn, .clear-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .convert-btn {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        .convert-btn:hover {
+            background-color: #27ae60;
+        }
+        
+        .clear-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .clear-btn:hover {
+            background-color: #c0392b;
+        }
+        
+        .result-area {
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #f8f9fa;
+            height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            display: none;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        
+        .result-area.active {
+            display: block;
+        }
+        
+        .result-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .copy-btn, .download-btn, .save-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .copy-btn {
+            background-color: #9b59b6;
+            color: white;
+        }
+        
+        .copy-btn:hover {
+            background-color: #8e44ad;
+        }
+        
+        .download-btn {
+            background-color: #1abc9c;
+            color: white;
+        }
+        
+        .download-btn:hover {
+            background-color: #16a085;
+        }
+        
+        .save-btn {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .save-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .saved-conversions {
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .saved-conversions.active {
+            display: block;
+        }
+        
+        .saved-title {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .saved-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .saved-item {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .saved-item-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .saved-item-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .saved-item-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #3498db;
+            font-size: 1.1rem;
+        }
+        
+        .instructions {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            margin-top: 30px;
+        }
+        
+        .instructions h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .instructions ol {
+            padding-right: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 15px;
+            color: #555;
+        }
+        
+        .note {
+            background-color: #fff9e6;
+            border-right: 5px solid #f1c40f;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .note h3 {
+            color: #d35400;
+            margin-bottom: 5px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #7f8c8d;
+            margin-top: 40px;
+            border-top: 1px solid #ecf0f1;
+        }
+        
+        .conversion-info {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            color: #2c3e50;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .result-actions {
+                flex-wrap: wrap;
+            }
+            
+            .result-actions button {
+                min-width: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-exchange-alt"></i> محول الصور والملفات إلى Base64</h1>
+            <p class="subtitle">تحويل أي صورة أو ملف إلى ترميز Base64 بسرعة وسهولة</p>
+            <span class="offline-badge"><i class="fas fa-wifi-slash"></i> يعمل دون اتصال بالإنترنت</span>
+        </header>
+        
+        <div class="main-content">
+            <section class="upload-section">
+                <h2 class="section-title"><i class="fas fa-cloud-upload-alt"></i> تحميل الملف</h2>
+                
+                <div class="upload-area" id="uploadArea">
+                    <i class="fas fa-file-upload"></i>
+                    <h3>اسحب وأفلت الملف هنا</h3>
+                    <p>أو انقر لاختيار ملف من جهازك</p>
+                    <button class="browse-btn" id="browseBtn">تصفح الملفات</button>
+                    <input type="file" class="file-input" id="fileInput" accept="*/*">
+                </div>
+                
+                <div class="selected-file" id="selectedFile">
+                    <div class="file-info">
+                        <i class="fas fa-file file-icon" id="fileIcon"></i>
+                        <div class="file-details">
+                            <h4 id="fileName">اسم الملف</h4>
+                            <p id="fileSize">حجم الملف</p>
+                            <p id="fileType">نوع الملف</p>
+                        </div>
+                    </div>
+                    
+                    <div class="preview-container">
+                        <div class="no-preview" id="noPreview">معاينة غير متاحة لهذا النوع من الملفات</div>
+                        <img id="imagePreview" alt="معاينة الصورة" style="display: none;">
+                    </div>
+                </div>
+                
+                <div class="actions">
+                    <button class="convert-btn" id="convertBtn">
+                        <i class="fas fa-sync-alt"></i> تحويل إلى Base64
+                    </button>
+                    <button class="clear-btn" id="clearBtn">
+                        <i class="fas fa-trash-alt"></i> مسح الكل
+                    </button>
+                </div>
+                
+                <div class="saved-conversions" id="savedConversions">
+                    <h3 class="saved-title"><i class="fas fa-history"></i> التحويلات المحفوظة</h3>
+                    <div class="saved-list" id="savedList">
+                        <!-- سيتم تعبئته بالتحويلات السابقة -->
+                    </div>
+                </div>
+            </section>
+            
+            <section class="result-section">
+                <h2 class="section-title"><i class="fas fa-code"></i> نتيجة التحويل</h2>
+                
+                <div class="result-area" id="resultArea"></div>
+                
+                <div class="conversion-info" id="conversionInfo">
+                    <i class="fas fa-info-circle"></i> تم تحويل الملف بنجاح. النتيجة أعلاه هي ترميز Base64 بدون بادئة البيانات.
+                </div>
+                
+                <div class="result-actions">
+                    <button class="copy-btn" id="copyBtn">
+                        <i class="far fa-copy"></i> نسخ النتيجة
+                    </button>
+                    <button class="download-btn" id="downloadBtn">
+                        <i class="fas fa-download"></i> تحميل النص
+                    </button>
+                    <button class="save-btn" id="saveBtn">
+                        <i class="fas fa-save"></i> حفظ التحويل
+                    </button>
+                </div>
+            </section>
+        </div>
+        
+        <section class="instructions">
+            <h2><i class="fas fa-info-circle"></i> كيفية الاستخدام</h2>
+            <ol>
+                <li>انقر على زر "تصفح الملفات" أو اسحب الملف وأفلته في المنطقة المخصصة</li>
+                <li>اختر أي ملف من جهازك (صور، مستندات، PDF، إلخ)</li>
+                <li>انقر على زر "تحويل إلى Base64" لبدء عملية التحويل</li>
+                <li>ستظهر النتيجة في منطقة النتيجة على اليمين</li>
+                <li>يمكنك نسخ النتيجة، تحميلها كملف نصي، أو حفظها للرجوع إليها لاحقًا</li>
+                <li>التحويلات المحفوظة تبقى حتى تمسحها يدويًا</li>
+            </ol>
+            
+            <div class="note">
+                <h3><i class="fas fa-lightbulb"></i> ملاحظات هامة</h3>
+                <p>1. هذا التطبيق يعمل بالكامل دون اتصال بالإنترنت. جميع عمليات التحويل تتم على جهازك ولا يتم رفع أي ملفات إلى أي خادم خارجي.</p>
+                <p>2. يمكنك تحويل عدد غير محدود من الملفات، وستبقى التحويلات المحفوظة حتى تمسح ذاكرة التصفح.</p>
+                <p>3. بالنسبة للملفات الكبيرة جدًا (أكثر من 10 ميجابايت) قد يستغرق التحويل بعض الوقت.</p>
+            </div>
+        </section>
+        
+        <footer>
+            <p>تم التطوير باستخدام HTML و CSS و JavaScript</p>
+            <p>© 2023 - جميع الحقوق محفوظة | يعمل دون اتصال بالإنترنت</p>
+        </footer>
+    </div>
+
+    <script>
+        // العناصر الرئيسية في DOM
+        const fileInput = document.getElementById('fileInput');
+        const uploadArea = document.getElementById('uploadArea');
+        const browseBtn = document.getElementById('browseBtn');
+        const selectedFile = document.getElementById('selectedFile');
+        const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
+        const fileType = document.getElementById('fileType');
+        const fileIcon = document.getElementById('fileIcon');
+        const imagePreview = document.getElementById('imagePreview');
+        const noPreview = document.getElementById('noPreview');
+        const convertBtn = document.getElementById('convertBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const resultArea = document.getElementById('resultArea');
+        const copyBtn = document.getElementById('copyBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const conversionInfo = document.getElementById('conversionInfo');
+        const savedConversions = document.getElementById('savedConversions');
+        const savedList = document.getElementById('savedList');
+        
+        // متغيرات التطبيق
+        let currentFile = null;
+        let currentResult = null;
+        let savedItems = [];
+        
+        // تحميل التحويلات المحفوظة من localStorage
+        function loadSavedConversions() {
+            const saved = localStorage.getItem('base64ConverterSaved');
+            if (saved) {
+                savedItems = JSON.parse(saved);
+                updateSavedList();
+            }
+        }
+        
+        // تحديث قائمة التحويلات المحفوظة
+        function updateSavedList() {
+            savedList.innerHTML = '';
+            
+            if (savedItems.length === 0) {
+                savedConversions.classList.remove('active');
+                return;
+            }
+            
+            savedConversions.classList.add('active');
+            
+            savedItems.forEach((item, index) => {
+                const savedItem = document.createElement('div');
+                savedItem.className = 'saved-item';
+                
+                const date = new Date(item.timestamp);
+                const timeString = date.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
+                const dateString = date.toLocaleDateString('ar-EG');
+                
+                savedItem.innerHTML = `
+                    <div class="saved-item-info">
+                        <i class="fas fa-file"></i>
+                        <div>
+                            <strong>${item.name}</strong>
+                            <div style="font-size: 0.8rem; color: #7f8c8d;">${dateString} ${timeString}</div>
+                        </div>
+                    </div>
+                    <div class="saved-item-actions">
+                        <button class="saved-item-btn load-btn" data-index="${index}" title="تحميل">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                        <button class="saved-item-btn delete-btn" data-index="${index}" title="حذف">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                
+                savedList.appendChild(savedItem);
+            });
+            
+            // إضافة أحداث للأزرار
+            document.querySelectorAll('.load-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    loadSavedConversion(index);
+                });
+            });
+            
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    deleteSavedConversion(index);
+                });
+            });
+        }
+        
+        // تحميل تحويل محفوظ
+        function loadSavedConversion(index) {
+            if (savedItems[index]) {
+                const item = savedItems[index];
+                resultArea.textContent = item.result;
+                resultArea.classList.add('active');
+                conversionInfo.style.display = 'block';
+                conversionInfo.innerHTML = `<i class="fas fa-info-circle"></i> تم تحميل التحويل المحفوظ: ${item.name}`;
+                
+                // التمرير إلى الأعلى لرؤية النتيجة
+                resultArea.scrollTop = 0;
+            }
+        }
+        
+        // حذف تحويل محفوظ
+        function deleteSavedConversion(index) {
+            savedItems.splice(index, 1);
+            localStorage.setItem('base64ConverterSaved', JSON.stringify(savedItems));
+            updateSavedList();
+        }
+        
+        // حفظ التحويل الحالي
+        function saveCurrentConversion() {
+            if (!currentResult || !currentFile) {
+                alert('لا توجد نتيجة لحفظها');
+                return;
+            }
+            
+            const conversion = {
+                name: currentFile.name,
+                type: currentFile.type,
+                size: currentFile.size,
+                result: currentResult,
+                timestamp: Date.now()
+            };
+            
+            savedItems.unshift(conversion);
+            
+            // الاحتفاظ فقط بـ 10 تحويلات حديثة
+            if (savedItems.length > 10) {
+                savedItems = savedItems.slice(0, 10);
+            }
+            
+            localStorage.setItem('base64ConverterSaved', JSON.stringify(savedItems));
+            updateSavedList();
+            
+            // إظهار رسالة نجاح
+            const originalText = saveBtn.innerHTML;
+            saveBtn.innerHTML = '<i class="fas fa-check"></i> تم الحفظ!';
+            saveBtn.style.backgroundColor = '#27ae60';
+            
+            setTimeout(() => {
+                saveBtn.innerHTML = originalText;
+                saveBtn.style.backgroundColor = '';
+            }, 2000);
+        }
+        
+        // أحداث التحميل والسحب والإفلات
+        browseBtn.addEventListener('click', () => fileInput.click());
+        
+        uploadArea.addEventListener('click', () => fileInput.click());
+        
+        // منع السلوك الافتراضي لسحب الملفات
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#3498db';
+            uploadArea.style.backgroundColor = '#f8fafc';
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.borderColor = '#bdc3c7';
+            uploadArea.style.backgroundColor = 'transparent';
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#bdc3c7';
+            uploadArea.style.backgroundColor = 'transparent';
+            
+            if (e.dataTransfer.files.length) {
+                handleFile(e.dataTransfer.files[0]);
+            }
+        });
+        
+        // حدث اختيار ملف
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                handleFile(e.target.files[0]);
+            }
+        });
+        
+        // دالة معالجة الملف
+        function handleFile(file) {
+            // التحقق من حجم الملف (حد أقصى 50 ميجابايت)
+            if (file.size > 50 * 1024 * 1024) {
+                alert('حجم الملف كبير جدًا. الحد الأقصى المسموح به هو 50 ميجابايت.');
+                return;
+            }
+            
+            currentFile = file;
+            
+            // تحديث معلومات الملف
+            fileName.textContent = file.name;
+            fileSize.textContent = formatFileSize(file.size);
+            fileType.textContent = file.type || 'غير معروف';
+            
+            // تحديث أيقونة الملف
+            updateFileIcon(file.type);
+            
+            // إظهار معاينة الصورة إذا كان الملف صورة
+            if (file.type.startsWith('image/')) {
+                noPreview.style.display = 'none';
+                imagePreview.style.display = 'block';
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imagePreview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                noPreview.style.display = 'block';
+                imagePreview.style.display = 'none';
+            }
+            
+            // إظهار قسم الملف المحدد
+            selectedFile.classList.add('active');
+            
+            // إخفاء نتيجة سابقة إن وجدت
+            resultArea.classList.remove('active');
+            conversionInfo.style.display = 'none';
+        }
+        
+        // دالة تحديث أيقونة الملف حسب النوع
+        function updateFileIcon(fileType) {
+            let iconClass = 'fas fa-file';
+            
+            if (fileType.startsWith('image/')) {
+                iconClass = 'fas fa-file-image';
+            } else if (fileType.includes('pdf')) {
+                iconClass = 'fas fa-file-pdf';
+            } else if (fileType.includes('text') || fileType.includes('txt')) {
+                iconClass = 'fas fa-file-alt';
+            } else if (fileType.includes('word') || fileType.includes('doc')) {
+                iconClass = 'fas fa-file-word';
+            } else if (fileType.includes('excel') || fileType.includes('xls')) {
+                iconClass = 'fas fa-file-excel';
+            } else if (fileType.includes('zip') || fileType.includes('rar') || fileType.includes('tar')) {
+                iconClass = 'fas fa-file-archive';
+            }
+            
+            fileIcon.className = iconClass + ' file-icon';
+        }
+        
+        // دالة تنسيق حجم الملف
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 بايت';
+            
+            const k = 1024;
+            const sizes = ['بايت', 'كيلوبايت', 'ميجابايت', 'جيجابايت'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // حدث تحويل الملف إلى Base64
+        convertBtn.addEventListener('click', () => {
+            if (!currentFile) {
+                alert('يرجى اختيار ملف أولاً');
+                return;
+            }
+            
+            // إظهار مؤشر تحميل
+            convertBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحويل...';
+            convertBtn.disabled = true;
+            
+            const reader = new FileReader();
+            
+            reader.onload = (e) => {
+                // الحصول على نتيجة base64
+                const base64String = e.target.result;
+                
+                // فصل بادئة البيانات عن محتوى base64 الفعلي
+                const base64Content = base64String.split(',')[1] || base64String;
+                
+                // حفظ النتيجة الحالية
+                currentResult = base64Content;
+                
+                // عرض أول 500 حرف من النتيجة مع إمكانية عرض الباقي
+                const displayText = base64Content.length > 1000 
+                    ? base64Content.substring(0, 1000) + '\n\n... (تم اختصار النتيجة. استخدم زر التحميل للحصول على النص الكامل)'
+                    : base64Content;
+                
+                resultArea.textContent = displayText;
+                resultArea.classList.add('active');
+                conversionInfo.style.display = 'block';
+                conversionInfo.innerHTML = `<i class="fas fa-info-circle"></i> تم تحويل "${currentFile.name}" بنجاح. النتيجة أعلاه هي ترميز Base64. طول النص: ${base64Content.length} حرف`;
+                
+                // التمرير إلى الأعلى لرؤية النتيجة
+                resultArea.scrollTop = 0;
+                
+                // إعادة زر التحويل إلى حالته الأصلية
+                convertBtn.innerHTML = '<i class="fas fa-sync-alt"></i> تحويل إلى Base64';
+                convertBtn.disabled = false;
+            };
+            
+            reader.onerror = (error) => {
+                console.error('Error converting file:', error);
+                alert('حدث خطأ أثناء تحويل الملف. يرجى المحاولة مرة أخرى.');
+                
+                // إعادة زر التحويل إلى حالته الأصلية
+                convertBtn.innerHTML = '<i class="fas fa-sync-alt"></i> تحويل إلى Base64';
+                convertBtn.disabled = false;
+            };
+            
+            // قراءة الملف كـ base64
+            reader.readAsDataURL(currentFile);
+        });
+        
+        // حدث مسح الكل
+        clearBtn.addEventListener('click', () => {
+            currentFile = null;
+            currentResult = null;
+            fileInput.value = '';
+            selectedFile.classList.remove('active');
+            resultArea.classList.remove('active');
+            resultArea.textContent = '';
+            conversionInfo.style.display = 'none';
+            
+            // إعادة تعيين معاينة الصورة
+            noPreview.style.display = 'block';
+            imagePreview.style.display = 'none';
+            imagePreview.src = '';
+        });
+        
+        // حدث نسخ النتيجة
+        copyBtn.addEventListener('click', () => {
+            if (!currentResult) {
+                alert('لا توجد نتيجة للنسخ');
+                return;
+            }
+            
+            navigator.clipboard.writeText(currentResult)
+                .then(() => {
+                    // تغيير نص الزر مؤقتًا للإشارة إلى النجاح
+                    const originalText = copyBtn.innerHTML;
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
+                    copyBtn.style.backgroundColor = '#27ae60';
+                    
+                    setTimeout(() => {
+                        copyBtn.innerHTML = originalText;
+                        copyBtn.style.backgroundColor = '';
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('Error copying text: ', err);
+                    
+                    // طريقة بديلة للنسخ
+                    const textArea = document.createElement('textarea');
+                    textArea.value = currentResult;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    
+                    // إظهار رسالة النجاح
+                    const originalText = copyBtn.innerHTML;
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
+                    copyBtn.style.backgroundColor = '#27ae60';
+                    
+                    setTimeout(() => {
+                        copyBtn.innerHTML = originalText;
+                        copyBtn.style.backgroundColor = '';
+                    }, 2000);
+                });
+        });
+        
+        // حدث تحميل النتيجة كملف نصي
+        downloadBtn.addEventListener('click', () => {
+            if (!currentResult) {
+                alert('لا توجد نتيجة للتحميل');
+                return;
+            }
+            
+            const blob = new Blob([currentResult], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            
+            // استخدام اسم الملف الأصلي مع امتداد txt
+            const originalName = currentFile ? currentFile.name.split('.')[0] : 'base64_result';
+            a.download = `${originalName}_base64.txt`;
+            
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            URL.revokeObjectURL(url);
+        });
+        
+        // حدث حفظ التحويل
+        saveBtn.addEventListener('click', saveCurrentConversion);
+        
+        // إضافة رسالة عند تحميل الصفحة
+        window.addEventListener('load', () => {
+            console.log('محول Base64 يعمل دون اتصال بالإنترنت');
+            loadSavedConversions();
+            
+            // إظهار رسالة ترحيب
+            setTimeout(() => {
+                if (savedItems.length > 0) {
+                    conversionInfo.innerHTML = `<i class="fas fa-info-circle"></i> تم تحميل ${savedItems.length} تحويلات محفوظة. يمكنك تحميلها من القائمة على اليسار.`;
+                    conversionInfo.style.display = 'block';
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
