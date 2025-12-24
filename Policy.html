@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سياسة الخصوصية - منظومة العشبجي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2a5934;
+            --secondary: #8db596;
+            --accent: #d4a762;
+            --light: #f8f9f5;
+            --dark: #1a2c1e;
+            --warning: #c45a4c;
+            --gray: #5a6d5c;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.8;
+            color: var(--dark);
+            background-color: var(--light);
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, #1e3a28 100%);
+            color: white;
+            padding: 2.5rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 6px solid var(--accent);
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .header-icon {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+
+        /* Main Content */
+        main {
+            padding: 3rem 0;
+        }
+
+        .privacy-section {
+            margin-bottom: 2.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            border-right: 5px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        .privacy-section:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transform: translateY(-3px);
+        }
+
+        h2 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+
+        h2 i {
+            margin-left: 10px;
+            color: var(--accent);
+        }
+
+        h3 {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin: 1.5rem 0 1rem;
+            padding-right: 1rem;
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin-right: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-right: 1.5rem;
+            text-align: justify;
+        }
+
+        li:before {
+            content: "•";
+            color: var(--secondary);
+            font-weight: bold;
+            position: absolute;
+            right: 0;
+        }
+
+        .highlight-box {
+            background-color: #f0f7f0;
+            border-right: 4px solid var(--secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box {
+            background-color: #fff5f5;
+            border-right: 4px solid var(--warning);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box h4 {
+            color: var(--warning);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-info {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border: 1px solid #e9ecef;
+        }
+
+        .contact-info h3 {
+            color: var(--primary);
+            margin-top: 0;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .contact-item i {
+            color: var(--primary);
+            margin-left: 10px;
+            font-size: 1.2rem;
+            width: 30px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .footer-text {
+            margin-bottom: 0.5rem;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .policy-date {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .privacy-section {
+                padding: 1.5rem;
+            }
+            
+            .header-icon {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="header-icon">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h1>سياسة الخصوصية لمنظومة "العشبجي"</h1>
+                <p class="subtitle">حماية بياناتك الشخصية هي أولويتنا الأولى في بيع المنتجات الرقمية</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Introduction -->
+        <section class="privacy-section">
+            <p>نرحب بك في منظومة "العشبجي" لبيع المنتجات الرقمية. نحن نُقدّر خصوصيتك ونلتزم بحماية بياناتك الشخصية. توضح سياسة الخصوصية هذه كيفية جمع معلوماتك الشخصية واستخدامها وحمايتها من خلال منصتنا الآلية.</p>
+        </section>
+
+        <!-- Section 1: Information We Collect -->
+        <section class="privacy-section">
+            <h2><i class="fas fa-database"></i> 1. المعلومات التي نجمعها</h2>
+            
+            <h3>أ. المعلومات التي تقدمها مباشرة:</h3>
+            <ul>
+                <li><strong>معلومات الدفع</strong>: رقم هاتف المستخدم (عند استخدام فودافون كاش أو ميزة مشابهة). <span class="highlight">نحن لا نخزن ولا نصل إلى تفاصيل الحساب البنكي أو معلومات البطاقة الائتمانية مطلقاً</span>. عملية التحقق تتم عبر قناة التليجرام فقط عن طريق إشعار الدفع.</li>
+                <li><strong>معلومات التواصل</strong>: معرف التليجرام الخاص بك (<code>@username</code>) ورسائل المحادثة المرسلة إلى البوت.</li>
+                <li><strong>معلومات الحساب</strong>: إذا قمت بإنشاء حساب، قد نجمع اسم المستخدم والبريد الإلكتروني.</li>
+            </ul>
+            
+            <h3>ب. المعلومات التي نجمعها تلقائياً:</h3>
+            <ul>
+                <li><strong>بيانات الاستخدام</strong>: وقت وتاريخ المعاملات، نوع المنتج الذي تم شراؤه، تفاعلاتك مع البوت.</li>
+                <li><strong>بيانات تقنية</strong>: نوع الجهاز، نظام التشغيل، إصدار تطبيق التليجرام (لضمان التوافق).</li>
+            </ul>
+        </section>
+
+        <!-- Section 2: How We Use Your Information -->
+        <section class="privacy-section">
+            <h2><i class="fas fa-cogs"></i> 2. كيفية استخدامنا لمعلوماتك</h2>
+            
+            <p>نستخدم المعلومات التي نجمعها للأغراض التالية فقط:</p>
+            
+            <ul>
+                <li><strong>تنفيذ الخدمة</strong>: معالجة طلبات الشراء، التحقق من الدفع، وتسليم المنتج الرقمي (صفحة HTML) تلقائياً.</li>
+                <li><strong>الدعم الفني</strong>: الرد على استفساراتك ومشاكلك الفنية عبر قناة التليجرام.</li>
+                <li><strong>تحسين الخدمة</strong>: فهم كيفية استخدام المنظومة لتحسين تجربة المستخدم ووظائف البوت.</li>
+                <li><strong>الأمان</strong>: الكشف عن ومنع الأنشطة الاحتيالية أو إساءة الاستخدام لمنظومتنا.</li>
+            </ul>
+            
+            <div class="highlight-box">
+                <p><i class="fas fa-info-circle"></i> <strong>ملاحظة هامة:</strong> نحن لا نستخدم بياناتك لأغراض التسويق أو نشاركها مع شركاء تسويقيين. جميع البيانات تستخدم حصراً لتقديم الخدمة التي طلبتها.</p>
+            </div>
+        </section>
+
+        <!-- Section 3: How We Share Your Information -->
+        <section class="privacy-section">
+            <h2><i class="fas fa-share-alt"></i> 3. كيف نتشارك معلوماتك</h2>
+            
+            <div class="warning-box">
+                <p><strong><i class="fas fa-exclamation-triangle"></i> نحن لا نبيع أو نؤجر أو نتبادل بياناتك الشخصية مع أطراف ثالثة لأغراض التسويق.</strong></p>
+            </div>
+            
+            <p>قد نشارك معلوماتك فقط في الحالات التالية:</p>
+            
+            <ul>
+                <li><strong>مع مقدمي الخدمة</strong>: مع شركاء تقنيين موثوقين (مزود خدمة استضافة البوت) والذين يلتزمون بمعايير الخصوصية المماثلة، و<strong>فقط لتشغيل الخدمة الأساسية</strong>.</li>
+                <li><strong>للأغراض القانونية</strong>: إذا اقتضى القانون أو استجابة لطلب رسمي من سلطة قضائية مختصة.</li>
+                <li><strong>لحماية الحقوق</strong>: لحماية حقوق أو ممتلكات أو سلامة "العشبجي"، مستخدمينا، أو الآخرين.</li>
+            </ul>
+        </section>
+
+        <!-- Section 4: Data Security -->
+        <section class="privacy-section">
+            <h2><i class="fas fa-lock"></i> 4. أمان بياناتك</h2>
+            
+            <p>نحن نتبع ممارسات أمنية تقنية وإدارية معقولة لحماية بياناتك من الوصول غير المصرح به أو التعديل أو الإفشاء أو التدمير. تشمل هذه الممارسات:</p>
+            
+            <ul>
+                <li>تشفير البيانات أثناء النقل عبر التليجرام.</li>
+                <li>استخدام بيئات تشغيل آمنة للبوت.</li>
+                <li>الوصول المحدود إلى بيانات المستخدمين للضرورة التشغيلية فقط.</li>
+                <li>مراجعة دورية لممارسات الأمان والخصوصية.</li>
+            </ul>
+            
+            <div class="highlight-box">
+                <p><i class="fas fa-shield-alt"></i> <strong>التزامنا بالأمان:</strong> بينما نبذل قصارى جهدنا لحماية بياناتك، لا يمكن ضمان أمان كامل لأي طريقة نقل بيانات عبر الإنترنت أو تخزين إلكتروني.</p>
+            </div>
+        </section>
+
+        <!-- Section 5: Your Rights -->
+        <section class="privacy-section">
+            <h2><i class="fas fa-user-check"></i> 5. حقوقك المتعلقة ببياناتك</h2>
+            
+            <p>لديك الحقوق التالية فيما يتعلق ببياناتك الشخصية:</p>
+            
+            <ul>
+                <li><strong>حق الوصول</strong>: يمكنك طلب نسخة من البيانات الشخصية التي نحتفظ بها عنك.</li>
+                <li><strong>حق التصحيح</strong>: يمكنك طلب تصحيح أي معلومات غير دقيقة.</li>
+                <li><strong>حق الحذف</strong>: يمكنك طلب حذف بياناتك الشخصية، مع مراعاة الالتزامات القانونية أو التشغيلية التي قد تمنعنا من حذف فوري لبعض المعلومات (مثل سجلات المعاملات المالية للفترة التي يفرضها القانون).</li>
+            </ul>
+            
+            <div class="contact-info">
+                <h3><i class="fas fa-envelope"></i> للمطالبة بأي من هذه الحقوق</h3>
+                <p>رجاءً تواصل معنا عبر البريد الإلكتروني أو قناة الدعم على التليجرام المذكورين في نهاية هذه السياسة.</p>
+            </div>
+        </section>
+
+        <!-- Section 6: Data Retention -->
+        <section class="privacy-section">
+            <h2><i class="fas fa-clock"></i> 6. مدة الاحتفاظ بالبيانات</h2>
+            
+            <p>نحتفظ ببياناتك الشخصية فقط طالما كان ذلك ضرورياً لتحقيق الأغراض الموضحة في هذه السياسة، أو كما هو مطلوب بموجب القانون. على سبيل المثال:</p>
+            
+            <ul>
+                <li><strong>سجلات المعاملات</strong>: يتم الاحتفاظ بها للفترة المالية والقانونية المطلوبة.</li>
+                <li><strong>بيانات التواصل في التليجرام</strong>: يتم الاحتفاظ بها طوال مدة تفاعلك مع الخدمة ولغرض تقديم الدعم.</li>
+                <li><strong>بيانات الحساب</strong>: يتم الاحتفاظ بها طالما الحساب نشط، أو لمدة معقولة بعد إلغاء الحساب.</li>
+            </ul>
+        </section>
+
+        <!-- Section 7: Policy Changes -->
+        <section class="privacy-section">
+            <h2><i class="fas fa-exchange-alt"></i> 7. التغييرات على سياسة الخصوصية</h2>
+            
+            <p>قد نقوم بتحديث سياسة الخصوصية هذه من وقت لآخر. سنعلمك بأي تغييرات جوهرية من خلال:</p>
+            
+            <ul>
+                <li>نشر الإشعار على قناتنا في التليجرام.</li>
+                <li>إرسال إشعار عبر البوت نفسه للمستخدمين النشطين.</li>
+                <li>تحديث تاريخ "آخر تحديث" في أسفل هذه الصفحة.</li>
+            </ul>
+            
+            <p>نوصيك بمراجعة هذه الصفحة بشكل دوري للاطلاع على أي تحديثات.</p>
+        </section>
+
+        <!-- Section 8: Contact Information -->
+        <section class="privacy-section">
+            <h2><i class="fas fa-headset"></i> 8. التواصل معنا</h2>
+            
+            <p>إذا كان لديك أي أسئلة أو استفسارات حول سياسة الخصوصية هذه، أو ممارساتنا المتعلقة بالبيانات، يرجى التواصل معنا عبر:</p>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fab fa-telegram"></i>
+                    <div>
+                        <strong>قناة الدعم على تليجرام:</strong> 
+                        <p><a href="https://t.me/alushbaji_support" style="color: var(--primary); text-decoration: none;">@alushbaji_support</a> (رابط نموذجي - يرجى استبداله بقناتك الفعلية)</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <strong>البريد الإلكتروني:</strong>
+                        <p>privacy@al-ushbaji.com (مثال - يرجى استبداله ببريدك الفعلي)</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fas fa-robot"></i>
+                    <div>
+                        <strong>بوت المبيعات:</strong>
+                        <p>@AlUshbajiBot (مثال - يرجى استبداله ببوتك الفعلي)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <p class="footer-text">منظومة "العشبجي" لبيع المنتجات الرقمية الآلية</p>
+                <p class="footer-text">نحن ملتزمون بحماية خصوصيتك وبياناتك الشخصية</p>
+                
+                <div class="policy-date">
+                    <p><strong>تاريخ النفاذ:</strong> ١ يناير ٢٠٢٤</p>
+                    <p><strong>آخر تحديث:</strong> ١ يناير ٢٠٢٤</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple animation for sections
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.privacy-section');
+            
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(section);
+            });
+            
+            // Initialize all sections as visible after a short delay
+            setTimeout(() => {
+                sections.forEach(section => {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                });
+            }, 300);
+        });
+    </script>
+</body>
+</html> 
